@@ -37,9 +37,9 @@ jobs:
         zip -r '${{ env.APP_PACKAGE_PATH }}/output/artifact.zip' '${{ env.APP_PACKAGE_PATH }}/output/'
     
     - name: Deploy Continuous Web Job
-      uses: azure/powershell@v1
+      uses: Amadevus/pwsh-script@v2.0.0
       with:
-        inlineScript: |
+        script: |
           $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
           $headers.Add("Content-Disposition", "attachment; filename='artifact.zip'")
           $headers.Add("Authorization", "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f '${{ secrets.DEPLOYMENT_USERNAME }}','${{ secrets.DEPLOYMENT_PASSWORD }}'))))
@@ -48,4 +48,3 @@ jobs:
           $files = Get-ChildItem -Path $path -Recurse
           Test-Path -Path $files[0]
           $response = Invoke-RestMethod "${{ secrets.SCM_API_URL }}/continuouswebjobs/${{ env.APP_NAME }}" -Method 'PUT' -Headers $headers -InFile $files[0]
-        azPSVersion: '3.1.0'
