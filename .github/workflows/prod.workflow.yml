@@ -1,4 +1,4 @@
-name: Deploy Caulius
+name: Deploy to Azure App Service
 
 on:
   push:
