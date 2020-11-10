@@ -9,8 +9,7 @@ on:
 env:
   BINARIES: './output/app_data/jobs/continuous/Caulius'
   ZIP_FILE: 'release.zip'
-  ZIP_PATH: './output'
-  ZIP_FILEPATH: './output/release.zip'
+  ZIP_PATH: './output/'
 
 jobs:
   build:
@@ -35,13 +34,11 @@ jobs:
         dotnet publish --configuration Release --no-build --output ${{ env.BINARIES }}
         
     - name: Zip Artifact
-      uses: TheDoctor0/zip-release@0.4.1
-      with:
-        filename: '${{env.ZIP_FILE}}'
-        path: '${{env.ZIP_PATH}}'
+      run: |
+        zip -r ${{env.ZIP_FILE}} ${{env.ZIP_PATH}}
     
     - name: Deploy Continuous Web Job
       uses: srijken/azure-zip-deploy@v1.0.1
       with:
-        zip-file: ${{env.ZIP_FILE_PATH}}
+        zip-file: ${{env.ZIP_FILE}}
         publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
