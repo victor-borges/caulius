@@ -7,9 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  BINARIES: './output/app_data/jobs/continuous/Caulius'
-  ZIP_FILE: 'release.zip'
-  ZIP_PATH: './output/'
+  APP_NAME: Caulius
 
 jobs:
   build:
@@ -31,14 +29,16 @@ jobs:
       run: |
         dotnet build --configuration Release --no-restore
         dotnet test --no-restore --verbosity normal
-        dotnet publish --configuration Release --no-build --output ${{ env.BINARIES }}
-        
+        dotnet publish --configuration Release --runtime win-x64 --output './output'
+      
     - name: Zip Artifact
       run: |
-        zip -r ${{env.ZIP_FILE}} ${{env.ZIP_PATH}}
+        zip -r 'artifact.zip' './output/'
     
     - name: Deploy Continuous Web Job
-      uses: srijken/azure-zip-deploy@v1.0.1
-      with:
-        zip-file: ${{env.ZIP_FILE}}
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
+      run: |
+        curl --location --request PUT '${{ secrets.SCM_API_URL }}/continuouswebjobs/${{ env.APP_NAME }}' \
+        --header "Authorization: Basic `echo -n '${{ secrets.DEPLOYMENT_USERNAME }}:${{ secrets.DEPLOYMENT_PASSWORD }}' | base64 -w 0`" \
+        --header 'Content-Disposition: attachment; filename=artifact.zip' \
+        --header 'Content-Type: application/zip' \
+        --data-binary '@artifact.zip'
