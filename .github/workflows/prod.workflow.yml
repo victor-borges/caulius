@@ -31,14 +31,12 @@ jobs:
         dotnet build --configuration Release --no-restore
         dotnet test --no-restore --verbosity normal
         dotnet publish -o '${{ env.APP_PACKAGE_PATH }}/output'
-
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v1
-      with:
-        name: artifact
-        path: output/
+      
+    - name: Zip Artifact
+      run: |
+        zip -r '${{ env.APP_PACKAGE_PATH }}/output/artifact.zip' '${{ env.APP_PACKAGE_PATH }}/output/'
     
-    - name: Run Azure PowerShell script
+    - name: Deploy Continuous Web Job
       uses: azure/powershell@v1
       with:
         inlineScript: |
