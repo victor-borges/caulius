@@ -30,11 +30,11 @@ jobs:
       run: |
         dotnet build --configuration Release --no-restore
         dotnet test --no-restore --verbosity normal
-        dotnet publish -o '${{ env.APP_PACKAGE_PATH }}/output'
+        dotnet publish --configuration Release --no-build --output '${{ env.APP_PACKAGE_PATH }}/output'
       
     - name: Zip Artifact
       run: |
-        zip -r '${{ env.APP_PACKAGE_PATH }}/output/artifact.zip' '${{ env.APP_PACKAGE_PATH }}/output/'
+        zip -r '${{ env.APP_PACKAGE_PATH }}/artifact.zip' '${{ env.APP_PACKAGE_PATH }}/output/'
     
     - name: Deploy Continuous Web Job
       run: |
@@ -42,4 +42,4 @@ jobs:
         --header "Authorization: Basic `echo -n '${{ secrets.DEPLOYMENT_USERNAME }}:${{ secrets.DEPLOYMENT_PASSWORD }}' | base64 -w 0`" \
         --header 'Content-Disposition: attachment; filename=artifact.zip' \
         --header 'Content-Type: application/zip' \
-        --data-binary '@${{ env.APP_PACKAGE_PATH }}/output/artifact.zip'
+        --data-binary '@${{ env.APP_PACKAGE_PATH }}/artifact.zip'
