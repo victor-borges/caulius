@@ -37,16 +37,9 @@ jobs:
         zip -r '${{ env.APP_PACKAGE_PATH }}/output/artifact.zip' '${{ env.APP_PACKAGE_PATH }}/output/'
     
     - name: Deploy Continuous Web Job
-      uses: Amadevus/pwsh-script@v2.0.0
-      with:
-        script: |
-          $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]";
-          $headers.Add("Content-Disposition", "attachment; filename='artifact.zip'");
-          $headers.Add("Authorization", "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f '${{ secrets.DEPLOYMENT_USERNAME }}','${{ secrets.DEPLOYMENT_PASSWORD }}'))));
-          $headers.Add("Content-Type", "application/zip");
-          $path = '${{ env.APP_PACKAGE_PATH }}/output/artifact.zip';
-          $files = Get-ChildItem -Path $path -Recurse;
-          Test-Path -Path $files[0];
-          $progressPreference = "silentlyContinue";
-          $response = Invoke-WebRequest -Uri ("${{ secrets.SCM_API_URL }}/continuouswebjobs/${{ env.APP_NAME }}") -Method 'PUT' -Headers $headers -InFile $files[0];
-          exit 0;
+      run: |
+        curl --location --request PUT '${{ secrets.SCM_API_URL }}/continuouswebjobs/${{ env.APP_NAME }}' \
+        --header "Authorization: Basic `echo -n '${{ secrets.DEPLOYMENT_USERNAME }}:${{ secrets.DEPLOYMENT_PASSWORD }}' | base64`" \
+        --header 'Content-Disposition: attachment; filename=artifact.zip' \
+        --header 'Content-Type: application/zip' \
+        --data-binary '${{ env.APP_PACKAGE_PATH }}/output/artifact.zip'
