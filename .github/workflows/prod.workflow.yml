@@ -39,7 +39,7 @@ jobs:
     - name: Deploy Continuous Web Job
       run: |
         curl --location --request PUT '${{ secrets.SCM_API_URL }}/continuouswebjobs/${{ env.APP_NAME }}' \
-        --header "Authorization: Basic `echo -n '${{ secrets.DEPLOYMENT_USERNAME }}:${{ secrets.DEPLOYMENT_PASSWORD }}' | base64`" \
+        --header "Authorization: Basic `echo -n '${{ secrets.DEPLOYMENT_USERNAME }}:${{ secrets.DEPLOYMENT_PASSWORD }}' | base64 -w 0`" \
         --header 'Content-Disposition: attachment; filename=artifact.zip' \
         --header 'Content-Type: application/zip' \
         --data-binary '${{ env.APP_PACKAGE_PATH }}/output/artifact.zip'
