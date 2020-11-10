@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Zhod.Caulius": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
