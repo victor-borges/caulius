@@ -48,4 +48,5 @@ jobs:
           $files = Get-ChildItem -Path $path -Recurse;
           Test-Path -Path $files[0];
           $progressPreference = "silentlyContinue";
-          $response = Invoke-RestMethod -Uri ("${{ secrets.SCM_API_URL }}/continuouswebjobs/${{ env.APP_NAME }}") -Method 'PUT' -Headers $headers -InFile $files[0];
+          $response = Invoke-WebRequest -Uri ("${{ secrets.SCM_API_URL }}/continuouswebjobs/${{ env.APP_NAME }}") -Method 'PUT' -Headers $headers -InFile $files[0];
+          exit 0;
