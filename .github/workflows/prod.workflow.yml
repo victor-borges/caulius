@@ -20,7 +20,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.301
+        dotnet-version: 5.0.x
 
     - name: Install dependencies
       run: dotnet restore
@@ -29,7 +29,7 @@ jobs:
       run: |
         dotnet build --configuration Release --no-restore
         dotnet test --no-restore --verbosity normal
-        dotnet publish --configuration Release --runtime win-x64 --self-contained false --output './output'
+        dotnet publish --configuration Release --runtime win-x64 --self-contained true --output './output'
       
     - name: Zip Artifact
       run: |
