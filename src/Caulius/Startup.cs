@@ -5,30 +5,34 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Caulius.Configuration;
 using Caulius.Domain.Services;
+using Microsoft.Extensions.Hosting;
 
 namespace Caulius
 {
     public class Startup
     {
-		public IConfiguration Configuration { get; }
+        private readonly IConfiguration _configuration;
+        private readonly IHostEnvironment _hostEnvironment;
 
-		public Startup(IConfiguration configuration)
+		public Startup(IConfiguration configuration, IHostEnvironment hostEnvironment)
 		{
-			Configuration = configuration;
+			_configuration = configuration;
+            _hostEnvironment = hostEnvironment;
         }
 
         public void ConfigureServices(IServiceCollection services)
 		{
-			services.Configure<CauliusSettings>(options => Configuration.Bind("CauliusSettings", options));
+			services.Configure<CauliusSettings>(options =>
+                _configuration.Bind("CauliusSettings", options));
 
 			services.AddSingleton(serviceProvider => new DiscordSocketClient(new DiscordSocketConfig
 			{
-				LogLevel = LogSeverity.Debug
-			}));
+				LogLevel = _hostEnvironment.IsProduction() ? LogSeverity.Info : LogSeverity.Debug
+            }));
 
 			services.AddSingleton(serviceProvider => new CommandService(new CommandServiceConfig
 			{
-				LogLevel = LogSeverity.Debug,
+				LogLevel = _hostEnvironment.IsProduction() ? LogSeverity.Info : LogSeverity.Debug,
 				CaseSensitiveCommands = false,
 				IgnoreExtraArgs = true
 			}));

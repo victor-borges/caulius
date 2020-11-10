@@ -34,10 +34,19 @@ namespace Caulius.Extensions
 				var hasConfigConstructor = typeof(TStartup).GetConstructor(
 					new[] { typeof(IConfiguration) }) != null;
 
+                // Check if TStartup has a constructor that takes a IConfiguration and a IHostEnvironment parameter
+				var hasConfigAndHostConstructor = typeof(TStartup).GetConstructor(
+					new[] { typeof(IConfiguration), typeof(IHostEnvironment) }) != null;
+
 				// Create a TStartup instance based on constructor
-				var startupObject = hasConfigConstructor ?
-					(TStartup)Activator.CreateInstance(typeof(TStartup), hostContext.Configuration) :
-					(TStartup)Activator.CreateInstance(typeof(TStartup), null);
+				TStartup startupObject;
+                
+                if (hasConfigConstructor)
+					startupObject = (TStartup)Activator.CreateInstance(typeof(TStartup), hostContext.Configuration);
+                else if (hasConfigAndHostConstructor)
+                    startupObject = (TStartup)Activator.CreateInstance(typeof(TStartup), hostContext.Configuration, hostContext.HostingEnvironment);
+                else
+                    startupObject = (TStartup)Activator.CreateInstance(typeof(TStartup), null);
 
 				// Finally, call the ConfigureServices implemented by the TStartup object
 				configureServicesMethod?.Invoke(startupObject, new object[] { services });

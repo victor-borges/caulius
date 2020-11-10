@@ -15,15 +15,19 @@ namespace Caulius.Domain.Services
         private readonly IServiceProvider _services;
         private readonly CauliusSettings _options;
 
-        public CommandHandler(DiscordSocketClient client, CommandService commands, IServiceProvider services, IOptions<CauliusSettings> options)
+        public CommandHandler(
+            DiscordSocketClient client,
+            CommandService commands,
+            IServiceProvider services,
+            IOptions<CauliusSettings> options)
         {
-            _commands = commands;
             _client = client;
+            _commands = commands;
             _services = services;
             _options = options.Value;
         }
 
-        public async Task InstallCommandsAsync()
+        public async Task InitializeAsync()
         {
             await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
@@ -32,21 +36,17 @@ namespace Caulius.Domain.Services
 
         private async Task HandleCommandAsync(SocketMessage socketMessage)
         {
-            if (!(socketMessage is SocketUserMessage message)) return;
+            if (socketMessage is not SocketUserMessage message)
+                return;
 
             var argPos = 0;
 
-            if (!(message.HasStringPrefix(_options.Prefix, ref argPos) ||
-                message.HasMentionPrefix(_client.CurrentUser, ref argPos)) ||
-                message.Author.IsBot)
+            if (message.Author.IsBot || !message.HasStringPrefix(_options.Prefix, ref argPos))
                 return;
 
             var context = new SocketCommandContext(_client, message);
 
-            var result = await _commands.ExecuteAsync(context, argPos, _services);
-
-            if (!result.IsSuccess)
-                await context.Channel.SendMessageAsync(result.ErrorReason);
+            await _commands.ExecuteAsync(context, argPos, _services);
         }
     }
 }

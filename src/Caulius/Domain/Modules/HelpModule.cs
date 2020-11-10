@@ -15,6 +15,7 @@ namespace Caulius.Domain.Modules
         }
 
         [Command("help")]
+        [Summary("Exibe esta mensagem.")]
         public Task GetHelpAsync()
         {
             var builder = new StringBuilder();
