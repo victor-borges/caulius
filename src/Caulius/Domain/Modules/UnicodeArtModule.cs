@@ -1,7 +1,7 @@
 ﻿using Discord.Commands;
 using System.Threading.Tasks;
 
-namespace Zhod.Caulius.Domain.Modules
+namespace Caulius.Domain.Modules
 {
     public class UnicodeArtModule : ModuleBase<SocketCommandContext>
     {

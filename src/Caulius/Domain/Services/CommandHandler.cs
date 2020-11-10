@@ -4,11 +4,11 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
-using Zhod.Caulius.Configuration;
+using Caulius.Configuration;
 
-namespace Zhod.Caulius.Domain.Modules
+namespace Caulius.Domain.Services
 {
-    class CommandHandler
+    public class CommandHandler
     {
         private readonly DiscordSocketClient _client;
         private readonly CommandService _commands;
@@ -25,17 +25,16 @@ namespace Zhod.Caulius.Domain.Modules
 
         public async Task InstallCommandsAsync()
         {
-            await _commands.AddModulesAsync(assembly: Assembly.GetEntryAssembly(), services: _services);
+            await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
 
             _client.MessageReceived += HandleCommandAsync;
         }
 
         private async Task HandleCommandAsync(SocketMessage socketMessage)
         {
-            var message = socketMessage as SocketUserMessage;
-            if (message == null) return;
+            if (!(socketMessage is SocketUserMessage message)) return;
 
-            int argPos = 0;
+            var argPos = 0;
 
             if (!(message.HasStringPrefix(_options.Prefix, ref argPos) ||
                 message.HasMentionPrefix(_client.CurrentUser, ref argPos)) ||
@@ -44,7 +43,7 @@ namespace Zhod.Caulius.Domain.Modules
 
             var context = new SocketCommandContext(_client, message);
 
-            var result = await _commands.ExecuteAsync(context, argPos, services: _services);
+            var result = await _commands.ExecuteAsync(context, argPos, _services);
 
             if (!result.IsSuccess)
                 await context.Channel.SendMessageAsync(result.ErrorReason);

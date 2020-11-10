@@ -6,12 +6,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading;
 using System.Threading.Tasks;
-using Zhod.Caulius.Configuration;
-using Zhod.Caulius.Domain.Modules;
+using Caulius.Configuration;
 
-namespace Zhod.Caulius.Domain.Services
+namespace Caulius.Domain.Services
 {
-    class CauliusService : BackgroundService
+    public class CauliusService : BackgroundService
     {
         private readonly CauliusSettings _options;
         private readonly DiscordSocketClient _client;

@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 
-namespace Zhod.Caulius.Extensions
+namespace Caulius.Extensions
 {
 	/// <summary>
 	/// Extensions to emulate a typical "Startup.cs" pattern for <see cref="IHostBuilder"/>
@@ -28,11 +28,11 @@ namespace Zhod.Caulius.Extensions
 			{
 				// Find a method that has this signature: ConfigureServices(IServiceCollection)
 				var configureServicesMethod = typeof(TStartup).GetMethod(
-					ConfigureServicesMethodName, new Type[] { typeof(IServiceCollection) });
+					ConfigureServicesMethodName, new[] { typeof(IServiceCollection) });
 
 				// Check if TStartup has a constructor that takes a IConfiguration parameter
 				var hasConfigConstructor = typeof(TStartup).GetConstructor(
-					new Type[] { typeof(IConfiguration) }) != null;
+					new[] { typeof(IConfiguration) }) != null;
 
 				// Create a TStartup instance based on constructor
 				var startupObject = hasConfigConstructor ?

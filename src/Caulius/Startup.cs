@@ -3,13 +3,12 @@ using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Zhod.Caulius.Configuration;
-using Zhod.Caulius.Domain.Modules;
-using Zhod.Caulius.Domain.Services;
+using Caulius.Configuration;
+using Caulius.Domain.Services;
 
-namespace Zhod.Caulius
+namespace Caulius
 {
-    class Startup
+    public class Startup
     {
 		public IConfiguration Configuration { get; }
 
@@ -22,12 +21,12 @@ namespace Zhod.Caulius
 		{
 			services.Configure<CauliusSettings>(options => Configuration.Bind("CauliusSettings", options));
 
-			services.AddSingleton(services => new DiscordSocketClient(new DiscordSocketConfig
+			services.AddSingleton(serviceProvider => new DiscordSocketClient(new DiscordSocketConfig
 			{
 				LogLevel = LogSeverity.Debug
 			}));
 
-			services.AddSingleton(services => new CommandService(new CommandServiceConfig
+			services.AddSingleton(serviceProvider => new CommandService(new CommandServiceConfig
 			{
 				LogLevel = LogSeverity.Debug,
 				CaseSensitiveCommands = false,
