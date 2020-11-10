@@ -34,7 +34,7 @@ jobs:
       
     - name: Zip Artifact
       run: |
-        zip -r '${{ env.APP_PACKAGE_PATH }}/artifact.zip' '${{ env.APP_PACKAGE_PATH }}/output/'
+        zip -r 'artifact.zip' '${{ env.APP_PACKAGE_PATH }}/output/'
     
     - name: Deploy Continuous Web Job
       run: |
@@ -42,4 +42,4 @@ jobs:
         --header "Authorization: Basic `echo -n '${{ secrets.DEPLOYMENT_USERNAME }}:${{ secrets.DEPLOYMENT_PASSWORD }}' | base64 -w 0`" \
         --header 'Content-Disposition: attachment; filename=artifact.zip' \
         --header 'Content-Type: application/zip' \
-        --data-binary '@${{ env.APP_PACKAGE_PATH }}/artifact.zip'
+        --data-binary '@artifact.zip'
