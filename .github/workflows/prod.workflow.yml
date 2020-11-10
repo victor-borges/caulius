@@ -1,0 +1,52 @@
+name: Deploy Caulius
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  APP_PACKAGE_PATH: '.'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.301
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build and Publish
+      run: |
+        dotnet build --configuration Release --no-restore
+        dotnet test --no-restore --verbosity normal
+        dotnet publish -o '${{ env.APP_PACKAGE_PATH }}/output'
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: artifact
+        path: output/
+    
+    - name: Run Azure PowerShell script
+      uses: azure/powershell@v1
+      with:
+        inlineScript: |
+          $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+          $headers.Add("Content-Disposition", "attachment; filename='artifact.zip'")
+          $headers.Add("Authorization", "Basic " + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f ${{ env.DEPLOYMENT_USERNAME }},${{ env.DEPLOYMENT_PASSWORD }}))))
+          $headers.Add("Content-Type", "application/zip")
+          $path = '${{ env.APP_PACKAGE_PATH }}/output/artifact.zip'
+          $files = Get-ChildItem -Path $path -Recurse
+          Test-Path -Path $files[0]
+          $response = Invoke-RestMethod "${{ env.SCM_API_URL }}/continuouswebjobs/${{ env.APP_NAME }}" -Method 'PUT' -Headers $headers -InFile $files[0]
+        azPSVersion: '3.1.0'
