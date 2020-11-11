@@ -25,17 +25,32 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
 
-    - name: Build and Publish
+    - name: Build
       run: |
         dotnet build --configuration Release --no-restore
-        dotnet test --no-restore --verbosity normal
-        dotnet publish --configuration Release --runtime win-x64 --self-contained true --output './output'
       
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test
+      run: |
+        dotnet test --no-restore --verbosity normal
+  
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Publish
+      run: |
+        dotnet publish --configuration Release --runtime win-x64 --self-contained true --output './output'
+  
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
     - name: Zip Artifact
       run: |
         zip -r 'artifact.zip' './output/'
-    
-    - name: Deploy Continuous Web Job
+
+    - name: Deploy to Azure
       run: |
         curl --location --request PUT '${{ secrets.SCM_API_URL }}/continuouswebjobs/${{ env.APP_NAME }}' \
         --header "Authorization: Basic `echo -n '${{ secrets.DEPLOYMENT_USERNAME }}:${{ secrets.DEPLOYMENT_PASSWORD }}' | base64 -w 0`" \
