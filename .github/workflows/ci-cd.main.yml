@@ -10,7 +10,7 @@ env:
   APP_NAME: Caulius
 
 jobs:
-  build and deploy:
+  deploy:
 
     runs-on: ubuntu-latest
 
