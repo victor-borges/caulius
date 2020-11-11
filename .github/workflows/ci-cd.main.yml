@@ -11,7 +11,7 @@ env:
 
 jobs:
   deploy:
-
+    name: Deploy to Azure
     runs-on: ubuntu-latest
 
     steps:
