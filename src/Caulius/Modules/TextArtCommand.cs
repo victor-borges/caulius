@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Caulius.Data
+namespace Caulius.Modules
 {
     public record TextArtCommand
     {

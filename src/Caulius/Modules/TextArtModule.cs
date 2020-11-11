@@ -2,11 +2,10 @@
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
-using Caulius.Data;
 using Discord.Commands;
 using Discord.Commands.Builders;
 
-namespace Caulius.Domain.Modules
+namespace Caulius.Modules
 {
     public class TextArtModule : ModuleBase<SocketCommandContext>
     {

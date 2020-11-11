@@ -3,7 +3,7 @@ using Discord.Commands;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Caulius.Domain.Modules
+namespace Caulius.Modules
 {
     public class HelpModule : ModuleBase<SocketCommandContext>
     {
@@ -22,7 +22,7 @@ namespace Caulius.Domain.Modules
 
             foreach (var command in _commands.Commands)
             {
-                builder.AppendLine($"**`!{command.Name}`**"); 
+                builder.AppendLine($"**`!{command.Name}`**");
                 builder.AppendLine(string.IsNullOrEmpty(command.Summary) ? "Sem descrição." : command.Summary);
                 builder.AppendLine();
             }
