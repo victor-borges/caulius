@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Caulius.Configuration;
 
-namespace Caulius.Domain.Services
+namespace Caulius.Handlers
 {
     public class CommandHandler
     {
