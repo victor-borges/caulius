@@ -3,7 +3,7 @@
 </p>
 
 <h3 align="center">
-    Reject humanity, return to monke!
+    Embrace 5th grade humor!
 </h3>
 
 <br>
@@ -17,4 +17,4 @@
 
 ## Overview
 
-Caulius has one purpose in life, to draw penises everywhere. And he reached Discord.
+Tired of searching for good penis text arts? Look no further, [add me to your Discord server](https://discord.com/api/oauth2/authorize?client_id=776110504186740736&permissions=2048&scope=bot).
