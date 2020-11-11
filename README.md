@@ -1,3 +1,11 @@
+<p align="center">
+    ![Caulius](docs/banner-transparent.png)
+</p>
+
+<h3 align="center">
+    Reject humanity, return to monke!
+</h3>
+
 # Caulius
 
 ![CI/CD](https://github.com/victor-borges/caulius/workflows/CI/CD/badge.svg)
