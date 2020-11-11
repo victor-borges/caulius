@@ -1,4 +1,4 @@
-name: Deploy to Azure App Service
+name: CI/CD
 
 on:
   push:
@@ -28,24 +28,15 @@ jobs:
     - name: Build
       run: |
         dotnet build --configuration Release --no-restore
-      
-  test:
-    runs-on: ubuntu-latest
-    steps:
+        
     - name: Test
       run: |
         dotnet test --no-restore --verbosity normal
-  
-  publish:
-    runs-on: ubuntu-latest
-    steps:
+        
     - name: Publish
       run: |
         dotnet publish --configuration Release --runtime win-x64 --self-contained true --output './output'
-  
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
+
     - name: Zip Artifact
       run: |
         zip -r 'artifact.zip' './output/'
