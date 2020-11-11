@@ -7,8 +7,9 @@ using Microsoft.Extensions.Options;
 using System.Threading;
 using System.Threading.Tasks;
 using Caulius.Configuration;
+using Caulius.Handlers;
 
-namespace Caulius.Domain.Services
+namespace Caulius
 {
     public class CauliusService : BackgroundService
     {

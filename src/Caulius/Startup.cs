@@ -1,11 +1,11 @@
-﻿using Discord;
+using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Caulius.Configuration;
-using Caulius.Domain.Services;
 using Microsoft.Extensions.Hosting;
+using Caulius.Handlers;
 
 namespace Caulius
 {
