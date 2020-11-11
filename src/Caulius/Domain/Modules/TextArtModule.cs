@@ -13,14 +13,14 @@ namespace Caulius.Domain.Modules
         private readonly string _textArtFilePath =
             string.Format(CultureInfo.InvariantCulture, "{0}{1}Data{1}textart.json", Directory.GetCurrentDirectory(), Path.DirectorySeparatorChar);
 
-        protected override void OnModuleBuilding(CommandService commandService, ModuleBuilder moduleBuilder)
+        protected override void OnModuleBuilding(CommandService commandService, ModuleBuilder builder)
         {
             var fileContent = File.ReadAllText(_textArtFilePath);
             var commands = JsonSerializer.Deserialize<IEnumerable<TextArtCommand>>(fileContent);
 
             foreach (var command in commands)
             {
-                moduleBuilder.AddCommand(
+                builder.AddCommand(
                     command.Command,
                     async (context, args, services, commandInfo) =>
                     {
@@ -33,7 +33,7 @@ namespace Caulius.Domain.Modules
                     });
             }
 
-            base.OnModuleBuilding(commandService, moduleBuilder);
+            base.OnModuleBuilding(commandService, builder);
         }
     }
 }
