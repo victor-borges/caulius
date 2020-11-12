@@ -6,50 +6,68 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Threading;
 using System.Threading.Tasks;
-using Caulius.Configuration;
-using Caulius.Handlers;
+using System.Reflection;
+using System;
+using System.Linq;
+using Caulius.Client.Handlers;
+using Caulius.Client.Configuration;
 
-namespace Caulius
+namespace Caulius.Client
 {
     public class CauliusService : BackgroundService
     {
-        private readonly CauliusSettings _options;
+        private readonly CauliusOptions _options;
         private readonly DiscordSocketClient _client;
         private readonly ILogger<CauliusService> _logger;
-        private readonly CommandHandler _commandHandler;
         private readonly CommandService _commands;
+        private readonly IServiceProvider _services;
 
         public CauliusService(
-            IOptions<CauliusSettings> options,
+            IOptions<CauliusOptions> options,
             DiscordSocketClient client,
             ILogger<CauliusService> logger,
-            CommandHandler commandHandler,
-            CommandService commands)
+            CommandService commands,
+            IServiceProvider services)
         {
             _options = options.Value;
             _client = client;
             _logger = logger;
-            _commandHandler = commandHandler;
             _commands = commands;
+            _services = services;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            InstallDelegates();
-            await _commandHandler.InitializeAsync();
+            await Task.WhenAll(
+                AddLogHandlersAsync(),
+                AddMessageHandlersAsync(),
+                _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services));
 
-            await _client.LoginAsync(TokenType.Bot, _options.BotToken);
+            _client.Ready += SetGameAsync;
+
+            await _client.LoginAsync(TokenType.Bot, _options.Token);
             await _client.StartAsync();
 
             await Task.Delay(-1, stoppingToken);
         }
 
-        private void InstallDelegates()
+        private Task AddLogHandlersAsync()
         {
             _client.Log += Log;
-            _client.Ready += SetGameAsync;
-
             _commands.Log += Log;
+
+            return Task.CompletedTask;
+        }
+
+        public async Task AddMessageHandlersAsync()
+        {
+            var messageHandlers =
+                from type in Assembly.GetExecutingAssembly().GetTypes()
+                where type.GetInterfaces().Contains(typeof(IMessageHandler))
+                select _services.GetService(type) as IMessageHandler;
+
+            foreach (var handler in messageHandlers)
+                await handler.SetupHandlerAsync();
         }
 
         private Task SetGameAsync() =>
@@ -69,6 +87,7 @@ namespace Caulius
             };
 
             _logger.Log(logLevel, message.ToString(prependTimestamp: false));
+
             return Task.CompletedTask;
         }
     }

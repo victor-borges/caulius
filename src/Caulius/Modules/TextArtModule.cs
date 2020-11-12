@@ -1,23 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Text.Json;
+﻿using Caulius.Data.Entities;
+using Caulius.Data.Repositories.Abstractions;
 using Discord.Commands;
 using Discord.Commands.Builders;
 
-namespace Caulius.Modules
+namespace Caulius.Client.Modules
 {
     public class TextArtModule : ModuleBase<SocketCommandContext>
     {
-        private readonly string _textArtFilePath =
-            string.Format(CultureInfo.InvariantCulture, "{0}{1}Data{1}textart.json", Directory.GetCurrentDirectory(), Path.DirectorySeparatorChar);
+        private readonly IReadOnlyRepository<TextArtCommand> _commandRepository;
+
+        public TextArtModule(IReadOnlyRepository<TextArtCommand> commandRepository)
+        {
+            _commandRepository = commandRepository;
+        }
 
         protected override void OnModuleBuilding(CommandService commandService, ModuleBuilder builder)
         {
-            var fileContent = File.ReadAllText(_textArtFilePath);
-            var commands = JsonSerializer.Deserialize<IEnumerable<TextArtCommand>>(fileContent);
-
-            foreach (var command in commands)
+            foreach (var command in _commandRepository.FindAll())
             {
                 builder.AddCommand(
                     command.Command,

@@ -3,7 +3,7 @@ using Discord.Commands;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Caulius.Modules
+namespace Caulius.Client.Modules
 {
     public class HelpModule : ModuleBase<SocketCommandContext>
     {
