@@ -2,14 +2,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caulius", "src\Caulius\Caulius.csproj", "{5FF39DB1-F34E-4C40-AB17-DE20D09400EA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caulius.UnitTests", "tests\Caulius.UnitTests\Caulius.UnitTests.csproj", "{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caulius.Client", "src\Caulius\Caulius.Client.csproj", "{5FF39DB1-F34E-4C40-AB17-DE20D09400EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFA27A81-5D82-4D72-BF43-3142D2F38958}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caulius.Data", "src\Caulius.Data\Caulius.Data.csproj", "{CA75B74D-B05E-4059-AF77-228B123064F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,18 +33,18 @@ Global
 		{5FF39DB1-F34E-4C40-AB17-DE20D09400EA}.Release|x64.Build.0 = Release|Any CPU
 		{5FF39DB1-F34E-4C40-AB17-DE20D09400EA}.Release|x86.ActiveCfg = Release|Any CPU
 		{5FF39DB1-F34E-4C40-AB17-DE20D09400EA}.Release|x86.Build.0 = Release|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Debug|x64.Build.0 = Debug|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Debug|x86.Build.0 = Debug|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Release|x64.ActiveCfg = Release|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Release|x64.Build.0 = Release|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Release|x86.ActiveCfg = Release|Any CPU
-		{D7FF7D20-2A4F-416C-BBBC-991A10313C3C}.Release|x86.Build.0 = Release|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Debug|x64.Build.0 = Debug|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Debug|x86.Build.0 = Debug|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Release|x64.ActiveCfg = Release|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Release|x64.Build.0 = Release|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Release|x86.ActiveCfg = Release|Any CPU
+		{CA75B74D-B05E-4059-AF77-228B123064F9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

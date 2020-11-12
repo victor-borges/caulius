@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 
-namespace Caulius.Extensions
+namespace Caulius.Client.Extensions
 {
     public static class StringExtensions
     {

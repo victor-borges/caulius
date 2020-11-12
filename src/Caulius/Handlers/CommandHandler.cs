@@ -2,24 +2,23 @@
 using Discord.WebSocket;
 using Microsoft.Extensions.Options;
 using System;
-using System.Reflection;
 using System.Threading.Tasks;
-using Caulius.Configuration;
+using Caulius.Client.Configuration;
 
-namespace Caulius.Handlers
+namespace Caulius.Client.Handlers
 {
-    public class CommandHandler
+    public class CommandHandler : IMessageHandler
     {
         private readonly DiscordSocketClient _client;
         private readonly CommandService _commands;
         private readonly IServiceProvider _services;
-        private readonly CauliusSettings _options;
+        private readonly CauliusOptions _options;
 
         public CommandHandler(
             DiscordSocketClient client,
             CommandService commands,
             IServiceProvider services,
-            IOptions<CauliusSettings> options)
+            IOptions<CauliusOptions> options)
         {
             _client = client;
             _commands = commands;
@@ -27,14 +26,13 @@ namespace Caulius.Handlers
             _options = options.Value;
         }
 
-        public async Task InitializeAsync()
+        public Task SetupHandlerAsync()
         {
-            await _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services);
-
-            _client.MessageReceived += HandleCommandAsync;
+            _client.MessageReceived += OnMessageReceivedAsync;
+            return Task.CompletedTask;
         }
 
-        private async Task HandleCommandAsync(SocketMessage socketMessage)
+        public async Task OnMessageReceivedAsync(SocketMessage socketMessage)
         {
             if (socketMessage is not SocketUserMessage message)
                 return;
