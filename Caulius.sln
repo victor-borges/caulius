@@ -9,7 +9,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caulius.Data", "src\Caulius.Data\Caulius.Data.csproj", "{CA75B74D-B05E-4059-AF77-228B123064F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caulius.Infrastructure", "src\Caulius.Infrastructure\Caulius.Infrastructure.csproj", "{CA75B74D-B05E-4059-AF77-228B123064F9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caulius.Domain", "src\Caulius.Domain\Caulius.Domain.csproj", "{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,18 @@ Global
 		{CA75B74D-B05E-4059-AF77-228B123064F9}.Release|x64.Build.0 = Release|Any CPU
 		{CA75B74D-B05E-4059-AF77-228B123064F9}.Release|x86.ActiveCfg = Release|Any CPU
 		{CA75B74D-B05E-4059-AF77-228B123064F9}.Release|x86.Build.0 = Release|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Debug|x64.Build.0 = Debug|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Debug|x86.Build.0 = Debug|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Release|x64.ActiveCfg = Release|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Release|x64.Build.0 = Release|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Release|x86.ActiveCfg = Release|Any CPU
+		{F8A5680F-0BA7-40FD-8529-1DD3BCFD58CF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

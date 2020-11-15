@@ -2,29 +2,24 @@
 using Discord.Commands;
 using System.Text;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace Caulius.Client.Modules
 {
+    [UsedImplicitly]
     public class HelpModule : ModuleBase<SocketCommandContext>
     {
-        private readonly CommandService _commands;
-
-        public HelpModule(CommandService commands)
-        {
-            _commands = commands;
-        }
+        [UsedImplicitly]
+        public CommandService CommandService { get; set; } = null!;
 
         [Command("help")]
-        [Summary("Exibe esta mensagem.")]
         public Task GetHelpAsync()
         {
             var builder = new StringBuilder();
 
-            foreach (var command in _commands.Commands)
+            foreach (var command in CommandService.Commands)
             {
                 builder.AppendLine($"**`!{command.Name}`**");
-                builder.AppendLine(string.IsNullOrEmpty(command.Summary) ? "Sem descrição." : command.Summary);
-                builder.AppendLine();
             }
 
             var embed = new EmbedBuilder()

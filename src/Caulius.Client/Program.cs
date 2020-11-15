@@ -2,6 +2,8 @@
 using Serilog;
 using System.Threading.Tasks;
 using Caulius.Client.Extensions;
+using Caulius.Infrastructure.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Caulius.Client
 {
@@ -18,6 +20,16 @@ namespace Caulius.Client
                 {
                     loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
                 })
-                .UseStartup<Startup>();
+                .ConfigureServices((hostingContext, services) =>
+                {
+                    services
+                        .ConfigureCauliusOptions(hostingContext.Configuration)
+                        .AddDiscordClient()
+                        .AddCommandService()
+                        .AddHostedService<CauliusService>()
+                        .AddCauliusContext(hostingContext.Configuration)
+                        .AddRepositories()
+                        .AddMessageHandlers();
+                });
     }
 }
