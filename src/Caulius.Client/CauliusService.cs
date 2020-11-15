@@ -10,7 +10,7 @@ using System.Reflection;
 using System;
 using System.Linq;
 using Caulius.Client.Handlers;
-using Caulius.Client.Configuration;
+using Caulius.Client.Options;
 
 namespace Caulius.Client
 {
@@ -59,7 +59,7 @@ namespace Caulius.Client
             return Task.CompletedTask;
         }
 
-        public async Task AddMessageHandlersAsync()
+        private async Task AddMessageHandlersAsync()
         {
             var messageHandlers =
                 from type in Assembly.GetExecutingAssembly().GetTypes()
@@ -71,7 +71,7 @@ namespace Caulius.Client
         }
 
         private Task SetGameAsync() =>
-            _client.SetGameAsync($"{_options.Prefix}help", type: ActivityType.Listening);
+            _client.SetGameAsync($"{_options.Prefix}help", type: ActivityType.Watching);
 
         private Task Log(LogMessage message)
         {

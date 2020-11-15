@@ -3,10 +3,12 @@ using Discord.WebSocket;
 using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
-using Caulius.Client.Configuration;
+using Caulius.Client.Options;
+using JetBrains.Annotations;
 
 namespace Caulius.Client.Handlers
 {
+    [UsedImplicitly]
     public class CommandHandler : IMessageHandler
     {
         private readonly DiscordSocketClient _client;
@@ -32,7 +34,7 @@ namespace Caulius.Client.Handlers
             return Task.CompletedTask;
         }
 
-        public async Task OnMessageReceivedAsync(SocketMessage socketMessage)
+        private async Task OnMessageReceivedAsync(SocketMessage socketMessage)
         {
             if (socketMessage is not SocketUserMessage message)
                 return;
