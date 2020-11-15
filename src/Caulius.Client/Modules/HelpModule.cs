@@ -21,7 +21,7 @@ namespace Caulius.Client.Modules
 
             var embed = new EmbedBuilder()
                 .WithColor(Color.LighterGrey)
-                .WithTitle("Comandos do Caulius")
+                .WithTitle("Caulius Help | Commands")
                 .WithDescription(builder.ToString())
                 .Build();
 
