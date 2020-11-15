@@ -39,11 +39,9 @@ namespace Caulius.Client
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await Task.WhenAll(
-                AddLogHandlersAsync(),
+                AttachEventHandlersAsync(),
                 AddMessageHandlersAsync(),
                 _commands.AddModulesAsync(Assembly.GetEntryAssembly(), _services));
-
-            _client.Ready += SetGameAsync;
 
             await _client.LoginAsync(TokenType.Bot, _options.Token);
             await _client.StartAsync();
@@ -51,10 +49,13 @@ namespace Caulius.Client
             await Task.Delay(-1, stoppingToken);
         }
 
-        private Task AddLogHandlersAsync()
+        private Task AttachEventHandlersAsync()
         {
             _client.Log += Log;
             _commands.Log += Log;
+            _client.Ready += SetGameAsync;
+            _client.JoinedGuild += _ => SetGameAsync();
+            _client.LeftGuild += _ => SetGameAsync();
 
             return Task.CompletedTask;
         }
@@ -70,8 +71,13 @@ namespace Caulius.Client
                 await handler.SetupHandlerAsync();
         }
 
-        private Task SetGameAsync() =>
-            _client.SetGameAsync($"{_client.Guilds.Count} servers", type: ActivityType.Watching);
+        private Task SetGameAsync()
+        {
+            var guildCount = _client.Guilds.Count;
+            var gameMessage = $"{guildCount} {(guildCount == 1 ? "server" : "servers")}";
+
+            return _client.SetGameAsync(gameMessage, type: ActivityType.Watching);
+        }
 
         private Task Log(LogMessage message)
         {
