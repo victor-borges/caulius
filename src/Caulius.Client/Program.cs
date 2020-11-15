@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Hosting;
-using Serilog;
 using System.Threading.Tasks;
 using Caulius.Client.Extensions;
 using Caulius.Infrastructure.Extensions;
@@ -16,10 +15,6 @@ namespace Caulius.Client
 
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .UseSerilog((hostingContext, loggerConfiguration) =>
-                {
-                    loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
-                })
                 .ConfigureServices((hostingContext, services) =>
                 {
                     services
