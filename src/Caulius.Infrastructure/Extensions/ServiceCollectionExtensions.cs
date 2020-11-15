@@ -22,7 +22,6 @@ namespace Caulius.Infrastructure.Extensions
             services.AddTransient<IUnitOfWork, CauliusContext>();
             services.AddTransient<CauliusSeed>();
 
-            // TODO: Find a better place for this database initialization
             services.BuildServiceProvider().GetRequiredService<CauliusSeed>().Seed();
 
             return services;

@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text.Json;
 using Caulius.Domain.Aggregates.TextArt;
 using Caulius.Domain.Common;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
 namespace Caulius.Infrastructure.Seed
@@ -26,24 +25,24 @@ namespace Caulius.Infrastructure.Seed
         {
             _context.EnsureDatabaseCreated();
 
-            if (!_context.TextCommands.AsEnumerable().Any() && (TextCommands?.Any() ?? false))
+            if (!_context.TextCommands.AsEnumerable().Any() && TextCommands.Any())
                 _context.TextCommands.AddRange(TextCommands);
 
             _context.SaveChanges();
         }
 
-        private IEnumerable<TextCommand>? TextCommands => GetItems<TextCommand>("TextCommands.json");
+        private IEnumerable<TextCommand> TextCommands => GetItems<TextCommand>("TextCommands.json");
 
-        private IEnumerable<T>? GetItems<T>(string fileName) where T : Entity
+        private IEnumerable<T> GetItems<T>(string fileName) where T : Entity
         {
             try
             {
                 var content = File.ReadAllText(Path.Combine(_seedFolderPath, fileName));
-                return JsonSerializer.Deserialize<IEnumerable<T>>(content, _serializerOptions);
+                return JsonSerializer.Deserialize<IEnumerable<T>>(content, _serializerOptions) ?? Array.Empty<T>();
             }
             catch (Exception)
             {
-                return null;
+                return Array.Empty<T>();
             }
         }
     }
