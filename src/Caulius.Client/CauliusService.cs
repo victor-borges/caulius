@@ -71,7 +71,7 @@ namespace Caulius.Client
         }
 
         private Task SetGameAsync() =>
-            _client.SetGameAsync($"{_options.Prefix}help", type: ActivityType.Watching);
+            _client.SetGameAsync($"{_client.Guilds.Count} servers", type: ActivityType.Watching);
 
         private Task Log(LogMessage message)
         {
