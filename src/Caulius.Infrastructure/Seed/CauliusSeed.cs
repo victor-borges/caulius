@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
-using Caulius.Domain.Aggregates.TextArt;
+using Caulius.Domain.Aggregates.CommandAggregate;
 using Caulius.Domain.Common;
 using Microsoft.Extensions.Hosting;
 

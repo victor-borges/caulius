@@ -1,21 +1,17 @@
-﻿using Caulius.Domain.Aggregates.TextArt;
-using Caulius.Domain.Common;
+﻿using Caulius.Infrastructure;
 using Discord.Commands;
 using Discord.Commands.Builders;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Caulius.Client.Modules
 {
-    [UsedImplicitly]
     public class TextModule : ModuleBase<SocketCommandContext>
     {
-        [UsedImplicitly]
-        public IRepository<TextCommand> TextCommandRepository { get; set; } = null!;
+        public CauliusContext CauliusContext { get; set; } = null!;
 
         protected override void OnModuleBuilding(CommandService commandService, ModuleBuilder builder)
         {
-            foreach (var command in TextCommandRepository.Query.AsNoTracking())
+            foreach (var command in CauliusContext.TextCommands.AsNoTracking())
             {
                 builder.AddCommand(
                     command.Command,

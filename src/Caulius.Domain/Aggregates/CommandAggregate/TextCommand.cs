@@ -1,6 +1,6 @@
 ﻿using Caulius.Domain.Common;
 
-namespace Caulius.Domain.Aggregates.TextArt
+namespace Caulius.Domain.Aggregates.CommandAggregate
 {
     public class TextCommand : Entity
     {

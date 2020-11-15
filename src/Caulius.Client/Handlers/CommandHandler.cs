@@ -4,11 +4,9 @@ using Microsoft.Extensions.Options;
 using System;
 using System.Threading.Tasks;
 using Caulius.Client.Options;
-using JetBrains.Annotations;
 
 namespace Caulius.Client.Handlers
 {
-    [UsedImplicitly]
     public class CommandHandler : IMessageHandler
     {
         private readonly DiscordSocketClient _client;

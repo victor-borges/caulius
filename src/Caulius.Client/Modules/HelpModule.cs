@@ -2,14 +2,11 @@
 using Discord.Commands;
 using System.Text;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
 
 namespace Caulius.Client.Modules
 {
-    [UsedImplicitly]
     public class HelpModule : ModuleBase<SocketCommandContext>
     {
-        [UsedImplicitly]
         public CommandService CommandService { get; set; } = null!;
 
         [Command("help")]
