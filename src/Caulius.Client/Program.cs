@@ -23,7 +23,6 @@ namespace Caulius.Client
                         .AddCommandService()
                         .AddHostedService<CauliusService>()
                         .AddCauliusContext(hostingContext.Configuration)
-                        .AddRepositories()
                         .AddMessageHandlers();
                 });
     }

@@ -1,4 +1,4 @@
-﻿using Caulius.Domain.Aggregates.TextArt;
+﻿using Caulius.Domain.Aggregates.CommandAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;

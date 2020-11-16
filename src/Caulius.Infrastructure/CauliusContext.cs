@@ -1,13 +1,10 @@
-﻿using Caulius.Domain.Aggregates.TextArt;
-using Caulius.Domain.Common;
-using JetBrains.Annotations;
+﻿using Caulius.Domain.Aggregates.CommandAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Caulius.Infrastructure
 {
-    public class CauliusContext : DbContext, IUnitOfWork
+    public class CauliusContext : DbContext
     {
-        [UsedImplicitly]
         public DbSet<TextCommand> TextCommands => Set<TextCommand>();
 
         public CauliusContext(DbContextOptions<CauliusContext> options)
