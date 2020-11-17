@@ -3,6 +3,7 @@
     public class CauliusOptions
     {
         public string Token { get; set; } = string.Empty;
-        public string Prefix { get; set; } = "!";
+        public string CommandPrefix { get; set; } = "c!";
+        public string TextCommandPrefix { get; set; } = "!";
     }
 }

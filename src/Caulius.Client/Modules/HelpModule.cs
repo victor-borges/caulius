@@ -1,7 +1,9 @@
-﻿using Discord;
+﻿using System.Linq;
+using Discord;
 using Discord.Commands;
-using System.Text;
 using System.Threading.Tasks;
+using Caulius.Client.Options;
+using Microsoft.Extensions.Options;
 
 namespace Caulius.Client.Modules
 {
@@ -9,20 +11,23 @@ namespace Caulius.Client.Modules
     {
         public CommandService CommandService { get; set; } = null!;
 
+        public IOptions<CauliusOptions> Options { get; set; } = null!;
+
         [Command("help")]
+        [Summary("Displays this help message.")]
         public Task GetHelpAsync()
         {
-            var builder = new StringBuilder();
-
-            foreach (var command in CommandService.Commands)
-            {
-                builder.AppendLine($"**`!{command.Name}`**");
-            }
+            var fields = CommandService.Commands
+                .Select(command =>
+                    new EmbedFieldBuilder()
+                        .WithName($"{Options.Value.CommandPrefix}{command.Name}")
+                        .WithValue(command.Summary))
+                .ToList();
 
             var embed = new EmbedBuilder()
                 .WithColor(Color.LighterGrey)
                 .WithTitle("Caulius Help | Commands")
-                .WithDescription(builder.ToString())
+                .WithFields(fields)
                 .Build();
 
             return ReplyAsync(embed: embed);
