@@ -39,7 +39,7 @@ namespace Caulius.Client.Handlers
 
             var argPos = 0;
 
-            if (message.Author.IsBot || !message.HasStringPrefix(_options.Prefix, ref argPos))
+            if (message.Author.IsBot || !message.HasStringPrefix(_options.CommandPrefix, ref argPos))
                 return;
 
             var context = new SocketCommandContext(_client, message);

@@ -74,7 +74,7 @@ namespace Caulius.Client
         private Task SetGameAsync()
         {
             var guildCount = _client.Guilds.Count;
-            var gameMessage = $"{guildCount} {(guildCount == 1 ? "server" : "servers")}";
+            var gameMessage = $"{guildCount} {(guildCount == 1 ? "server" : "servers")} | {_options.CommandPrefix}help";
 
             return _client.SetGameAsync(gameMessage, type: ActivityType.Watching);
         }
@@ -95,6 +95,14 @@ namespace Caulius.Client
             _logger.Log(logLevel, message.ToString(prependTimestamp: false));
 
             return Task.CompletedTask;
+        }
+
+        public override void Dispose()
+        {
+            _client.LogoutAsync().Wait();
+            _client.Dispose();
+            GC.SuppressFinalize(this);
+            base.Dispose();
         }
     }
 }

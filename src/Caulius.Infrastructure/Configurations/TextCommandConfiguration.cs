@@ -21,6 +21,7 @@ namespace Caulius.Infrastructure.Configurations
             builder.Property(t => t.Created).ValueGeneratedOnAdd();
             builder.Property(t => t.Updated).ValueGeneratedOnUpdate();
             builder.Property(t => t.Command).IsRequired();
+            builder.HasIndex(t => t.Command).IsUnique(false);
             builder.Property(t => t.Text).IsRequired();
         }
     }
