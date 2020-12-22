@@ -33,7 +33,7 @@ jobs:
         
     - name: Publish
       run: |
-        dotnet publish --configuration Release --runtime win-x64 --self-contained true --output './output'
+        dotnet publish --configuration Release --runtime win-x64 --output './output'
 
     - name: Zip Artifact
       run: |
