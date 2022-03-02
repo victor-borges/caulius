@@ -1,24 +1,23 @@
 ﻿using Caulius.Domain.Aggregates.CommandAggregate;
 using Microsoft.EntityFrameworkCore;
 
-namespace Caulius.Infrastructure
+namespace Caulius.Infrastructure;
+
+public class CauliusContext : DbContext
 {
-    public class CauliusContext : DbContext
+    public DbSet<TextCommand> TextCommands => Set<TextCommand>();
+
+    public CauliusContext(DbContextOptions<CauliusContext> options)
+        : base(options)
+    { }
+
+    public bool EnsureDatabaseCreated()
     {
-        public DbSet<TextCommand> TextCommands => Set<TextCommand>();
+        return Database.EnsureCreated();
+    }
 
-        public CauliusContext(DbContextOptions<CauliusContext> options)
-            : base(options)
-        { }
-
-        public bool EnsureDatabaseCreated()
-        {
-            return Database.EnsureCreated();
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CauliusContext).Assembly);
-        }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(CauliusContext).Assembly);
     }
 }

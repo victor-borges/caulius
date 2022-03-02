@@ -1,11 +1,8 @@
-﻿using System;
+﻿namespace Caulius.Domain.Common;
 
-namespace Caulius.Domain.Common
+public abstract class Entity
 {
-    public abstract class Entity
-    {
-        public Guid Id { get; set; }
-        public DateTime Created { get; set; }
-        public DateTime? Updated { get; set; }
-    }
+    public Guid Id { get; set; }
+    public DateTime Created { get; set; }
+    public DateTime? Updated { get; set; }
 }
