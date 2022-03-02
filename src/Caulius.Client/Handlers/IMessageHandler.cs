@@ -1,9 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿namespace Caulius.Client.Handlers;
 
-namespace Caulius.Client.Handlers
+public interface IMessageHandler
 {
-    public interface IMessageHandler
-    {
-        public Task SetupHandlerAsync();
-    }
+    public Task SetupHandlerAsync();
 }
